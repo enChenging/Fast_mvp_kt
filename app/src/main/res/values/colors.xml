@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--theme-->
+    <color name="colorPrimary">#1775ef</color>
+    <color name="colorPrimaryDark">#054592</color>
+    <color name="colorAccent">@color/Cyan</color>
+    <color name="textColorPrimary">#616161</color>
+    <color name="list_divider">@color/md_grey_400</color>
+    <color name="line_divider">@color/md_grey_300</color>
+    <color name="viewBackground">@color/White</color>
+    <color name="windowBackground">@color/md_grey_100</color>
+    <color name="common_color">#19191B</color>
+
+    <color name="transparent_75">#ba000000</color>
+    <color name="arrow_color">@color/md_grey_700</color>
+    <color name="item_nav_color_tv">#19191B</color>
+    <color name="color_title_bg">#CCFFFFFF</color>
+    <color name="black_alpha_32">#32000000</color>
+</resources>
