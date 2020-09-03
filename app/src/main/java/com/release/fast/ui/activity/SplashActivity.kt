@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.view.View
+import com.release.alert.Alert
 import com.release.fast.MainActivity
 import com.release.fast.R
 import com.release.fast.widget.InstallUtil
@@ -22,22 +23,28 @@ import kotlinx.android.synthetic.main.activity_splash.*
  */
 class SplashActivity : BaseActivity() {
 
-    override fun getLayoutId(): Int = R.layout.activity_splash
+    private var hasPermission: Boolean = false
+    private var isNever: Boolean = false
 
     private val scopeProvider by lazy {
         AndroidLifecycleScopeProvider.from(this)
     }
 
-    private var hasPermission: Boolean = false
-    private var isNever: Boolean = false
+    override fun isOriginalLayout(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int = R.layout.activity_splash
 
     override fun initView() {
-        mTopBar.visibility = View.GONE
-
-        if (Build.VERSION.SDK_INT >= 23)
-            requestCameraPermissions()
-        else
-            jump()
+        //showToast("正在登陆...")
+        Alert(this).builder(Alert.Type.PROGRESS).setProgressText("登陆中...").show()
+        btn_jump.postDelayed(Runnable {
+            if (Build.VERSION.SDK_INT >= 23)
+                requestCameraPermissions()
+            else
+                jump()
+        },2000)
     }
 
     override fun initListener() {
