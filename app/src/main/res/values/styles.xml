@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="BaseAppTheme" parent="Theme.AppCompat.DayNight">
@@ -13,7 +13,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme" parent="BaseAppTheme.NoActionBar"/>
+    <style name="AppTheme" parent="BaseAppTheme.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
     <style name="AppLauncher" parent="BaseAppTheme.NoActionBar">
         <item name="android:windowBackground">@mipmap/splash</item>
