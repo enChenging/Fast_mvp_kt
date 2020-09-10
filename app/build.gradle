@@ -16,12 +16,6 @@ android {
     }
 
     signingConfigs {
-        debug {
-            keyAlias 'android'
-            keyPassword 'android'
-            storeFile file('fast_release.jks')
-            storePassword 'android'
-        }
         release {
             keyAlias 'android'
             keyPassword 'android'
@@ -34,6 +28,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
 
