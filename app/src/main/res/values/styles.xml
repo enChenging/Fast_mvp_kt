@@ -14,7 +14,7 @@
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
+<!--        <item name="android:windowIsTranslucent">true</item>-->  <!-- 连续点击会出现window背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 

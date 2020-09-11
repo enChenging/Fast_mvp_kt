@@ -1,4 +1,4 @@
-package com.release.fast.ui.activity
+package com.release.fast.ui.act
 
 import android.text.TextUtils
 import com.release.fast.base.BWebActivity

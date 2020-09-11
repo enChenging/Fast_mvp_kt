@@ -1,4 +1,4 @@
-package com.release.fast.ui.activity
+package com.release.fast.ui.act
 
 import android.Manifest
 import android.content.Intent
@@ -37,14 +37,10 @@ class SplashActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_splash
 
     override fun initView() {
-        //showToast("正在登陆...")
-        Alert(this).builder(Alert.Type.PROGRESS).setProgressText("登陆中...").show()
-        btn_jump.postDelayed(Runnable {
-            if (Build.VERSION.SDK_INT >= 23)
-                requestCameraPermissions()
-            else
-                jump()
-        },2000)
+        if (Build.VERSION.SDK_INT >= 23)
+            requestCameraPermissions()
+        else
+            jump()
     }
 
     override fun initListener() {
@@ -58,10 +54,9 @@ class SplashActivity : BaseActivity() {
 
 
     private fun jump() {
-        Intent(this, MainActivity::class.java).run {
+        Intent(this, LoginActivity::class.java).run {
             startActivity(this)
             finish()
-//            overridePendingTransition(R.anim.slide_right_entry, R.anim.hold)
         }
     }
 

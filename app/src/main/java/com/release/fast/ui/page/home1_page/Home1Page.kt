@@ -1,7 +1,9 @@
 package com.release.fast.ui.page.home1_page
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.orhanobut.logger.Logger
 import com.release.fast.R
 import com.release.fast.base.BFragment
 import com.release.fast.mvp.contract.Home1PageContract
@@ -29,8 +31,19 @@ class Home1Page : BFragment<Home1PageContract.View, Home1PageContract.Presenter>
 
     override fun getLayoutId(): Int = R.layout.page_news
 
+    companion object {
+
+        fun newInstance(): Home1Page {
+            val args = Bundle()
+            val fragment = Home1Page()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun initView(view: View) {
-        super.initView(view)
+        Logger.i("Home1Page---initView")
+        fragments.clear()
         view_pager.adapter = mAdapter
         for (i in TITLE.indices) {
             fragments.add(NewsListFragment.newInstance(TITLE[i]))

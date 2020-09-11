@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -27,11 +28,19 @@ object CommonUtil {
     }
 
     fun dp2px(context: Context, dpValue: Float): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.resources.displayMetrics).toInt()
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dpValue,
+            context.resources.displayMetrics
+        ).toInt()
     }
 
     fun sp2px(context: Context, spValue: Float): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.resources.displayMetrics).toInt()
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            spValue,
+            context.resources.displayMetrics
+        ).toInt()
     }
 
     /**
@@ -141,5 +150,14 @@ object CommonUtil {
         return data
     }
 
+    fun hideStatusBar(activity: AppCompatActivity) {
+        val decorView = activity.window.decorView
+        val option = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+        decorView.systemUiVisibility = option
+        activity.window.statusBarColor = Color.TRANSPARENT
+        val actionBar = activity.supportActionBar
+        actionBar?.hide()
+    }
 
 }

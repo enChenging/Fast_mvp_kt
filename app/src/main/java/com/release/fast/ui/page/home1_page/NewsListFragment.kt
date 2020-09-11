@@ -15,7 +15,7 @@ import com.release.fast.mvp.contract.NewsListContract
 import com.release.fast.mvp.model.Obj
 import com.release.fast.mvp.model.Row
 import com.release.fast.mvp.presenter.NewsListPresenter
-import com.release.fast.ui.activity.WebActivity
+import com.release.fast.ui.act.WebActivity
 import com.release.fast.ui.adpater.RecommendAdapter
 import com.orhanobut.logger.Logger
 import com.release.easybasex.constance.BConstants.NEWS_TYPE_TITLE

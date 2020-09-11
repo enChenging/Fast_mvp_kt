@@ -2,9 +2,11 @@ package com.release.fast.ui.page.home3_page
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.orhanobut.logger.Logger
 import com.release.fast.R
 import com.release.fast.base.BFragment
 import com.release.fast.constant.Constant
@@ -13,9 +15,8 @@ import com.release.fast.mvp.contract.Home3PageContract
 import com.release.fast.mvp.model.Obj
 import com.release.fast.mvp.model.Row
 import com.release.fast.mvp.presenter.Home3PagePresenter
-import com.release.fast.ui.activity.WebActivity
+import com.release.fast.ui.act.WebActivity
 import com.release.fast.ui.adpater.RecommendAdapter
-import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.page_recommend.*
@@ -39,8 +40,18 @@ class Home3Page :
         RecommendAdapter(R.layout.item_recommend, null)
     }
 
+    companion object {
+
+        fun newInstance(): Home3Page {
+            val args = Bundle()
+            val fragment = Home3Page()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun initView(view: View) {
-        super.initView(view)
+        Logger.i("Home3Page---initView")
 
         refresh_layout.run {
             setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {

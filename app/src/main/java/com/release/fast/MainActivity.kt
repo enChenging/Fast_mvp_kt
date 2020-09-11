@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cn.jzvd.Jzvd
@@ -16,9 +18,16 @@ import com.release.fast.ext.showToast
 import com.release.fast.mvp.contract.MainContract
 import com.release.fast.mvp.presenter.MainPresenter
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.orhanobut.logger.Logger
 import com.release.easybasex.utils.StatusBarUtil
+import com.release.fast.ui.page.home1_page.Home1Page
+import com.release.fast.ui.page.home2_page.Home2Page
+import com.release.fast.ui.page.home3_page.Home3Page
+import com.release.fast.ui.page.home4_page.Home4Page
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_navigation_tab.*
+import java.util.ArrayList
 
 /**
  * @author Mr.release
@@ -26,15 +35,23 @@ import kotlinx.android.synthetic.main.activity_main.*
  * @Describe
  */
 class MainActivity : BActivity<MainContract.View, MainContract.Presenter>(),
-    MainContract.View {
+    MainContract.View, View.OnClickListener {
 
+    companion object {
+        private const val TAB_INDEX_HOME: Int = 0x0
+        private const val TAB_INDEX_FIND: Int = 0x1
+        private const val TAB_INDEX_TASK: Int = 0x2
+        private const val TAB_INDEX_MY: Int = 0x3
+    }
+
+    private var mExitTime: Long = 0
 
     override fun createPresenter(): MainContract.Presenter = MainPresenter()
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
-
+        Logger.i("MainActivity === initView")
         mTopBar.visibility = View.GONE
 
         left_navigation.run {
@@ -61,25 +78,35 @@ class MainActivity : BActivity<MainContract.View, MainContract.Presenter>(),
             }
         }
 
-        bottom_navigation.apply {
-            labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        initFragments()
+        setSelectTab(TAB_INDEX_HOME)
+        content_vp.apply {
+            setScanScroll(false)
+            offscreenPageLimit = 4
         }
-
-        val navController =
-            (supportFragmentManager.findFragmentById(R.id.fragment_nav) as NavHostFragment).navController
-        NavigationUI.setupWithNavController(bottom_navigation, navController)
     }
 
-    override fun initThemeColor() {
-        StatusBarUtil.setColorNoTranslucentForDrawerLayout(
-            this@MainActivity,
-            dl_drawer,
-            ContextCompat.getColor(this, R.color.colorPrimary)
-        )
+    private fun initFragments() {
+        val fragments = ArrayList<Fragment>()
+        fragments.clear()
+        fragments.add(Home1Page.newInstance())
+        fragments.add(Home2Page.newInstance())
+        fragments.add(Home3Page.newInstance())
+        fragments.add(Home4Page.newInstance())
+
+        content_vp.adapter = object  : FragmentPagerAdapter(supportFragmentManager){
+            override fun getItem(position: Int): Fragment {
+                return fragments[position]
+            }
+
+            override fun getCount(): Int {
+                return fragments.size
+            }
+        }
+
     }
 
     override fun initListener() {
-
         dl_drawer.run {
             setScrimColor(ContextCompat.getColor(this@MainActivity, R.color.black_alpha_32))
             addDrawerListener(object : DrawerLayout.DrawerListener {
@@ -99,8 +126,29 @@ class MainActivity : BActivity<MainContract.View, MainContract.Presenter>(),
 
             })
         }
+
+        tab_home_layout.setOnClickListener(this)
+        tab_find_layout.setOnClickListener(this)
+        tab_task_layout.setOnClickListener(this)
+        tab_my_layout.setOnClickListener(this)
     }
 
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.tab_home_layout -> {
+                setSelectTab(TAB_INDEX_HOME)
+            }
+            R.id.tab_find_layout -> {
+                setSelectTab(TAB_INDEX_FIND)
+            }
+            R.id.tab_task_layout -> {
+                setSelectTab(TAB_INDEX_TASK)
+            }
+            R.id.tab_my_layout -> {
+                setSelectTab(TAB_INDEX_MY)
+            }
+        }
+    }
 
     open fun toggle() {
         val drawerLockMode = dl_drawer.getDrawerLockMode(GravityCompat.START)
@@ -111,7 +159,59 @@ class MainActivity : BActivity<MainContract.View, MainContract.Presenter>(),
         }
     }
 
-    private var mExitTime: Long = 0
+    private fun setSelectTab(tabIndex: Int) {
+        val resources = resources
+        content_vp.currentItem = tabIndex
+        when (tabIndex) {
+            TAB_INDEX_HOME -> {
+                tab_home_icon_iv.setImageResource(R.mipmap.ic_home_selected)
+                tab_find_icon_iv.setImageResource(R.mipmap.ic_find_default)
+                tab_task_icon_iv.setImageResource(R.mipmap.ic_task_default)
+                tab_my_icon_iv.setImageResource(R.mipmap.ic_my_default)
+
+                tab_home_title_iv.setTextColor(resources.getColor(R.color.tab_text_selected))
+                tab_find_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_task_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_my_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+
+            }
+            TAB_INDEX_FIND -> {
+                tab_home_icon_iv.setImageResource(R.mipmap.ic_home_default)
+                tab_find_icon_iv.setImageResource(R.mipmap.ic_find_selected)
+                tab_task_icon_iv.setImageResource(R.mipmap.ic_task_default)
+                tab_my_icon_iv.setImageResource(R.mipmap.ic_my_default)
+
+                tab_home_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_find_title_iv.setTextColor(resources.getColor(R.color.tab_text_selected))
+                tab_task_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_my_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+            }
+            TAB_INDEX_TASK -> {
+                tab_home_icon_iv.setImageResource(R.mipmap.ic_home_default)
+                tab_find_icon_iv.setImageResource(R.mipmap.ic_find_default)
+                tab_task_icon_iv.setImageResource(R.mipmap.ic_task_selected)
+                tab_my_icon_iv.setImageResource(R.mipmap.ic_my_default)
+
+                tab_home_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_find_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_task_title_iv.setTextColor(resources.getColor(R.color.tab_text_selected))
+                tab_my_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+            }
+            TAB_INDEX_MY -> {
+                tab_home_icon_iv.setImageResource(R.mipmap.ic_home_default)
+                tab_find_icon_iv.setImageResource(R.mipmap.ic_find_default)
+                tab_task_icon_iv.setImageResource(R.mipmap.ic_task_default)
+                tab_my_icon_iv.setImageResource(R.mipmap.ic_my_selected)
+
+                tab_home_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_find_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_task_title_iv.setTextColor(resources.getColor(R.color.tab_text_unselected))
+                tab_my_title_iv.setTextColor(resources.getColor(R.color.tab_text_selected))
+            }
+        }
+    }
+
+
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -146,6 +246,14 @@ class MainActivity : BActivity<MainContract.View, MainContract.Presenter>(),
     override fun onPause() {
         super.onPause()
         Jzvd.resetAllVideos()
+    }
+
+    override fun initThemeColor() {
+        StatusBarUtil.setColorNoTranslucentForDrawerLayout(
+            this@MainActivity,
+            dl_drawer,
+            ContextCompat.getColor(this, R.color.colorPrimary)
+        )
     }
 }
 

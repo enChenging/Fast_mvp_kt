@@ -16,4 +16,7 @@
     <color name="item_nav_color_tv">#19191B</color>
     <color name="color_title_bg">#CCFFFFFF</color>
     <color name="black_alpha_32">#32000000</color>
+
+    <color name="tab_text_unselected">#757575</color>
+    <color name="tab_text_selected">#2196F3</color>
 </resources>
