@@ -22,7 +22,7 @@
             android:id="@+id/tab_home_icon_iv"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@mipmap/ic_home_default"/>
+            android:background="@drawable/selector_home"/>
 
         <TextView
             android:id="@+id/tab_home_title_iv"
@@ -50,7 +50,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:padding="2dp"
-            android:src="@mipmap/ic_find_default"/>
+            android:background="@drawable/selector_find"/>
 
         <TextView
             android:id="@+id/tab_find_title_iv"
@@ -79,7 +79,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:padding="2dp"
-            android:src="@mipmap/ic_task_default"/>
+            android:background="@drawable/selector_task"/>
 
         <TextView
             android:id="@+id/tab_task_title_iv"
@@ -108,7 +108,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:padding="2dp"
-            android:src="@mipmap/ic_my_default"/>
+            android:background="@drawable/selector_mine"/>
 
         <TextView
             android:id="@+id/tab_my_title_iv"
